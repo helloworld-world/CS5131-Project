@@ -5,12 +5,13 @@ from bs4 import BeautifulSoup
 LINK = "https://codeforces.com"
 PROBLEMSET_LINK = LINK + "/problemset/page/"
 SAVE_DIRECTORY = "problems"
-MAX_PAGE = 1
+START = 2, END = 2
 
 
 def get_links():
     result = []
-    for page_no in range(1, MAX_PAGE + 1):
+    for page_no in range(START, END + 1):
+        print("Page " + str(page_no) + '...')
         page = requests.get(PROBLEMSET_LINK + str(page_no))
         soup = BeautifulSoup(page.content, 'html.parser')
         alist = soup.select('.problems div[style="float: left;"] a')
@@ -26,7 +27,12 @@ def save_problem(link):
         file.write(page.read())
 
 
+print("Getting links to problems...")
 links = get_links()
 
+print("Getting htmls of each problem...")
+i = 0
 for link in links:
+    i += 1
+    print("Problem " + str(i) + '...')
     save_problem(link)

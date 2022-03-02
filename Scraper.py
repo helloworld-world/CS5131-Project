@@ -7,8 +7,8 @@ import concurrent.futures
 LINK = "https://codeforces.com"
 PROBLEMSET_LINK = LINK + "/problemset/page/"
 SAVE_DIRECTORY = "problems"
-START = 31
-END = 40
+START = 51
+END = 76
 
 
 def get_links():

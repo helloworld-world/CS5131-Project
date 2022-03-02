@@ -6,13 +6,19 @@ PROBLEM_DIR = 'problems/'
 
 tag_count = {}
 
-for dir in os.listdir(PROBLEM_DIR):
-    problem = Problem(PROBLEM_DIR + dir)
-    for tag in problem.has_tags:
-        if tag in tag_count:
-            tag_count[tag] += 1
-        else:
-            tag_count[tag] = 1
+for dir_name in os.listdir(PROBLEM_DIR):
+    try:
+        problem = Problem(PROBLEM_DIR + dir_name)
+    except:
+        # Some problems are in russia or has pdf statement, so we will delete those
+        print(dir_name)
+        os.remove(PROBLEM_DIR + dir_name)
+    for i in range(len(problem.has_tags)):
+        if problem.has_tags[i]:
+            if problem.TAGS[i] in tag_count:
+                tag_count[problem.TAGS[i]] += 1
+            else:
+                tag_count[problem.TAGS[i]] = 1
 
 sorted_tags = []
 

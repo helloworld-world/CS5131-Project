@@ -44,7 +44,8 @@ class Problem:
         for span in spans:
             str = span.text.strip()
             if str[0] == '*':
-                self.rating = int(str[1:])
+                if str[1:].isdigit():
+                    self.rating = int(str[1:])
             else:
                 for i in range (len(self.TAGS)):
                     if self.TAGS[i] == str:

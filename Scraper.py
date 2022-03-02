@@ -1,12 +1,14 @@
-import urllib
+import time
+
 import requests
 from bs4 import BeautifulSoup
+import concurrent.futures
 
 LINK = "https://codeforces.com"
 PROBLEMSET_LINK = LINK + "/problemset/page/"
 SAVE_DIRECTORY = "problems"
-START = 2
-END = 2
+START = 31
+END = 40
 
 
 def get_links():
@@ -22,18 +24,19 @@ def get_links():
 
 
 def save_problem(link):
-    page = urllib.request.urlopen(LINK + link)
+    resp = requests.get(LINK + link)
     seg = link.split('/')
-    with open(SAVE_DIRECTORY + '/' + seg[-2] + seg[-1] + '.html', 'wb') as file:
-        file.write(page.read())
+    title = SAVE_DIRECTORY + '/' + seg[-2] + seg[-1] + '.html'
+
+    with open(title, 'wb') as file:
+        file.write(resp.content)
+
+    time.sleep(0.25)
 
 
 print("Getting links to problems...")
 links = get_links()
 
 print("Getting htmls of each problem...")
-i = 0
-for link in links:
-    i += 1
-    print("Problem " + str(i) + '...')
-    save_problem(link)
+with concurrent.futures.ThreadPoolExecutor(max_workers=min(len(links), 30)) as executor:
+    executor.map(save_problem, links)

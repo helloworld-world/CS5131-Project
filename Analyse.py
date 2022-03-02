@@ -8,7 +8,7 @@ tag_count = {}
 
 for dir in os.listdir(PROBLEM_DIR):
     problem = Problem(PROBLEM_DIR + dir)
-    for tag in problem.tags:
+    for tag in problem.has_tags:
         if tag in tag_count:
             tag_count[tag] += 1
         else:

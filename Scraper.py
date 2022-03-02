@@ -5,7 +5,8 @@ from bs4 import BeautifulSoup
 LINK = "https://codeforces.com"
 PROBLEMSET_LINK = LINK + "/problemset/page/"
 SAVE_DIRECTORY = "problems"
-START = 2, END = 2
+START = 2
+END = 2
 
 
 def get_links():
